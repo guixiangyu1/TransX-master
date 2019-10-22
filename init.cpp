@@ -253,7 +253,7 @@ void getBatch(int *ph, int *pt, int *pr, int *nh, int *nt, int *nr, int batchSiz
 	float prob;
 	for (int batch = 0; batch < batchSize; batch++) {
 		i = rand_max(id, tripleTotal);
-		if (bernFlag)
+		if (bernFlag) //Bernoulli采样
 			prob = 1000 * right_mean[trainList[i].r] / (right_mean[trainList[i].r] + left_mean[trainList[i].r]);
 		else
 			prob = 500;

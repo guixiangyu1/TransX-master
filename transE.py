@@ -37,7 +37,7 @@ class TransEModel(object):
 		size = config.hidden_size
 		margin = config.margin
 
-		self.pos_h = tf.placeholder(tf.int32, [None])
+		self.pos_h = tf.placeholder(tf.int32, [None])   # batch size
 		self.pos_t = tf.placeholder(tf.int32, [None])
 		self.pos_r = tf.placeholder(tf.int32, [None])
 
