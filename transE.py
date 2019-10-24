@@ -134,7 +134,9 @@ def main(_):
 			nh_addr = nh.__array_interface__['data'][0]
 			nt_addr = nt.__array_interface__['data'][0]
 			nr_addr = nr.__array_interface__['data'][0]
+			#addr是他们的address，地址，对应到get_batch 中需要用到的指针。
 
+			#告诉这些函数（getBatch等）的参数类型
 			lib.getBatch.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_int]
 			test_lib.getHeadBatch.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p]
 			test_lib.getTailBatch.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p]

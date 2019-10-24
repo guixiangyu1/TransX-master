@@ -129,14 +129,14 @@ void init() {
 	right_mean = (float *)calloc(relationTotal,sizeof(float));
 	for (int i = 0; i < entityTotal; i++) {
 	    // leftmean：统计不同relation的head的种类数
-		for (int j = lefHead[i] + 1; j < rigHead[i]; j++)
+		for (int j = lefHead[i] + 1; j <= rigHead[i]; j++)   //把条件<变成了<=
 			if (trainHead[j].r != trainHead[j - 1].r)
 				left_mean[trainHead[j].r] += 1.0;
 		if (lefHead[i] <= rigHead[i])
 			left_mean[trainHead[lefHead[i]].r] += 1.0;
 
 		// rightmean
-		for (int j = lefTail[i] + 1; j < rigTail[i]; j++)
+		for (int j = lefTail[i] + 1; j <= rigTail[i]; j++)   //把条件<变成了<=
 			if (trainTail[j].r != trainTail[j - 1].r)
 				right_mean[trainTail[j].r] += 1.0;
 		if (lefTail[i] <= rigTail[i])
@@ -201,9 +201,16 @@ int corrupt_head(int id, int h, int r) {
 		rig = mid;
 	}
 	rr = lef;
-	int tmp = rand_max(id, entityTotal - (rr - ll + 1));
+
+	//上述是找（h,r,-)的边界
+	//下面是产生随机数，排除边界上的positive ones，
+
+	// 生成随机数
+    int tmp = rand_max(id, entityTotal - (rr - ll + 1));
+    // 如果在边界之外，则直接return即可
 	if (tmp < trainHead[ll].t) return tmp;
 	if (tmp > trainHead[rr].t - rr + ll - 1) return tmp + rr - ll + 1;
+	//如果在边界之内，那得除掉那些正例的tail，计算负例最终的tail
 	lef = ll, rig = rr + 1;
 	while (lef + 1 < rig) {
 		mid = (lef + rig) >> 1;
