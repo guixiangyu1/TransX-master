@@ -129,14 +129,14 @@ void init() {
 	right_mean = (float *)calloc(relationTotal,sizeof(float));
 	for (int i = 0; i < entityTotal; i++) {
 	    // leftmean：统计不同relation的head的种类数
-		for (int j = lefHead[i] + 1; j <= rigHead[i]; j++)   //把条件<变成了<=
+		for (int j = lefHead[i] + 1; j < rigHead[i]; j++)   //把条件<变成了<=
 			if (trainHead[j].r != trainHead[j - 1].r)
 				left_mean[trainHead[j].r] += 1.0;
 		if (lefHead[i] <= rigHead[i])
 			left_mean[trainHead[lefHead[i]].r] += 1.0;
 
 		// rightmean
-		for (int j = lefTail[i] + 1; j <= rigTail[i]; j++)   //把条件<变成了<=
+		for (int j = lefTail[i] + 1; j < rigTail[i]; j++)   //把条件<变成了<=
 			if (trainTail[j].r != trainTail[j - 1].r)
 				right_mean[trainTail[j].r] += 1.0;
 		if (lefTail[i] <= rigTail[i])
